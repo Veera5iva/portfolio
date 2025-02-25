@@ -1,9 +1,13 @@
-import React from 'react'
+import { Html, useProgress } from "@react-three/drei";
 
 const Loader = () => {
-  return (
-    <div>Loader</div>
-  )
-}
+   const { progress } = useProgress();  // Shows loading progress
 
-export default Loader
+   return (
+      <Html center>
+         <span className="text-white">{progress.toFixed(2)}%</span>
+      </Html>
+   );
+};
+
+export default Loader;
