@@ -6,7 +6,7 @@ import { fadeIn, textVariant } from "../utils/motion"
 import { SectionWrapper } from "../hoc"
 const ServiceCard = ({index, title, icon}) => {
    return (
-      <Tilt className="xs:w-[250px] w-full">
+      <Tilt className="xs:!w-[250px] !w-full flex">
          <motion.div
             variants={fadeIn("right", "spring", 0.5 * index, 0.75)}
             className="w-full p-[1px] rounded-[20px] shadow-rose-800 shadow-lg border-rose-400 border-1"
@@ -47,7 +47,7 @@ const About = () => {
             I'm a passionate Full-Stack Developer with expertise in JavaScript, TypeScript, React, and Next.js. I enjoy building scalable and user-friendly applications that solve real-world problems. Let's create something amazing together!
          </motion.p>
 
-         <div className="flex flex-wrap !mt-20 !gap-10">
+         <div className="flex !flex-wrap !mt-20 !gap-10">
             {services.map((service, index) => (
                <ServiceCard key={service.title} index={index} {...service} />
             ))}
