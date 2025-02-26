@@ -47,14 +47,13 @@ const About = () => {
             I'm a passionate Full-Stack Developer with expertise in JavaScript, TypeScript, React, and Next.js. I enjoy building scalable and user-friendly applications that solve real-world problems. Let's create something amazing together!
          </motion.p>
 
-         <div className="flex !flex-wrap !mt-20 !gap-10">
+         <div className="flex !flex-wrap !mt-20 !gap-10 justify-center items-center">
             {services.map((service, index) => (
                <ServiceCard key={service.title} index={index} {...service} />
             ))}
 
          </div>
-
-
+         
       </>
    )
 }
