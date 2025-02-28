@@ -1,3 +1,14 @@
+* {
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+}
+
+html, body {
+   background-color: black; /* Match your site's background */
+   overflow: hidden; /* Prevent scroll issues */
+}
+
 #preloader {
     top: 0;
     left: 0;
@@ -8,7 +19,6 @@
     align-items: center;
     z-index: 9999;
 }
-
 
 svg path {
    fill: transparent;
@@ -66,11 +76,8 @@ svg {
 }
 
 @keyframes line-anim {
-   /* 95% {
-      fill: transparent;
-   } */
    100% {
-      /* fill: white; */
+      fill: white;
       stroke-dashoffset: 0;
    }
    
