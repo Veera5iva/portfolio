@@ -30,7 +30,7 @@ const Navbar = () => {
         <div className={`${styles.paddingX} w-full flex items-center fixed top-0 z-20 bg-primary !py-5`}>
             <div className="w-full max-w-7xl mx-auto flex justify-between items-center">
                 <Link to="/" className="flex items-center gap-2"
-                    onClick={() => { setActive(""); window.scrollTo(0, 0); }}
+                    onClick={() => { window.scrollTo(0, 0) }}
                 >
                     <img src={veeraLogo} alt="logo" className="md:w-80 h-9 object-contain" />
                     {/* <p className="text-white text-[18px] flex font-bold cursor-pointer">
