@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
 import { styles } from "../styles.js"
 import { navLinks } from "../constants";
-import { logo, menu, close } from "../assets"
+import { veeraLogo, menu, close } from "../assets"
 import { useState } from "react";
 
 const Navbar = () => {
@@ -13,11 +13,11 @@ const Navbar = () => {
             <Link to="/" className="flex items-center gap-2"
                onClick={() => { setActive(""); window.scrollTo(0, 0); }}
             >
-               <img src={logo} alt="logo" className="w-9 h-9 object-contain" />
-               <p className="text-white text-[18px] flex font-bold cursor-pointer">
+               <img src={veeraLogo} alt="logo" className="md:w-80 h-9 object-contain" />
+               {/* <p className="text-white text-[18px] flex font-bold cursor-pointer">
                   Veerasiva &nbsp;
                   <span className="sm:block hidden">| Portfolio</span>
-               </p>
+               </p> */}
             </Link>
 
             <ul className="list-none hidden sm:flex flex-row gap-10">
