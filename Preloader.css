@@ -66,11 +66,8 @@ svg {
 }
 
 @keyframes line-anim {
-   /* 95% {
-      fill: transparent;
-   } */
    100% {
-      /* fill: white; */
+      fill: white;
       stroke-dashoffset: 0;
    }
    
