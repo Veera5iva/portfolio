@@ -6,7 +6,6 @@
 
 html, body {
    background-color: black; /* Match your site's background */
-   overflow: hidden; /* Prevent scroll issues */
 }
 
 #preloader {
