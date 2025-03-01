@@ -27,7 +27,7 @@ const Navbar = () => {
     const [isActive, setIsActive] = useState(false);
 
     return (
-        <div className={`${styles.paddingX} w-full flex items-center fixed top-0 z-20 bg-primary !py-9`}>
+        <div className={`${styles.paddingX} w-[80%] mx-auto flex items-center fixed top-5 left-1/2 transform -translate-x-1/2 z-20 bg-secondary !py-7 rounded-[45px]`}>
             <div className="w-full max-w-7xl mx-auto flex justify-between items-center">
                 <Link to="/" className="flex items-center gap-2"
                     onClick={() => { window.scrollTo(0, 0) }}
@@ -38,7 +38,7 @@ const Navbar = () => {
                   <span className="sm:block hidden">| Portfolio</span>
                </p> */}
                 </Link>
-                <div className={style.header}>
+                <div className={`${style.header}`}>
                     <motion.div
                         className={style.menu}
                         variants={menu}
