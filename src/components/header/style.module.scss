@@ -1,13 +1,15 @@
 .header{
     position: fixed;
-    right: 200px;
-    top: 34px;
+    right: 100px;
+    top: 26px;
+
     .menu{
         width: 480px;
         height: 650px;
         background-color:#e23720;
         border-radius: 25px;
-        position: relative;
+        position: absolute;
+        top: 100px;
         overflow: hidden;
     }
 }
