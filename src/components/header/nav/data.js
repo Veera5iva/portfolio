@@ -1,41 +1,33 @@
 export const links = [
     {
+        title: "About",
+        href: "#about"
+    },
+    {
         title: "Projects",
-        href: "/"
-    },
-    {
-        title: "Agency",
-        href: "/"
-    },
-    {
-        title: "Expertise",
-        href: "/"
-    },
-    {
-        title: "Careers",
         href: "/"
     },
     {
         title: "Contact",
         href: "/"
-    }
+    },
 ]
 
 export const footerLinks = [
     {
-        title: "Facebook",
-        href: "/"
-    },
-    {
-        title: "LinkedIn",
-        href: "/"
+        title: "GitHub",
+        href: "https://github.com/Veera5iva"
     },
     {
         title: "Instagram",
-        href: "/"
+        href: "https://www.instagram.com/veera5iva/"
     },
     {
-        title: "Twitter",
-        href: "/"
+        title: "LinkedIn",
+        href: "https://www.linkedin.com/in/veerasiva2004/"
+    },
+    {
+        title: "X",
+        href: "https://x.com/Veera5iva"
     }
 ]
