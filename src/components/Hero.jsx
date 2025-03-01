@@ -32,7 +32,7 @@ const Hero = () => {
       { text: ".", class: colors.punctuation },
       { text: "get", class: colors.method },
       { text: "(", class: colors.bracket },
-      { text: "\"/api/veerasiva/portfolio\"", class: colors.string },
+      { text: "\"/api/portfolio/hero-section\"", class: colors.string },
       { text: ");", class: colors.punctuation },
       { text: "\n", class: "" },
 
@@ -62,21 +62,21 @@ const Hero = () => {
 
       { text: "  headline", class: colors.property },
       { text: ": ", class: colors.punctuation },
-      { text: "\"I develop web applications using modern technologies\"", class: colors.string },
+      { text: "\"Turning caffeine into code & ideas into applications\"", class: colors.string },
       { text: ",", class: colors.punctuation },
       { text: "\n", class: "" },
 
-      { text: "  skills", class: colors.property },
-      { text: ": [", class: colors.bracket },
-      { text: "\"JavaScript\"", class: colors.string },
-      { text: ", ", class: colors.punctuation },
-      { text: "\"React\"", class: colors.string },
-      { text: ", ", class: colors.punctuation },
-      { text: "\"GSAP\"", class: colors.string },
-      { text: ", ", class: colors.punctuation },
-      { text: "\"Three.js\"", class: colors.string },
-      { text: "]", class: colors.bracket },
+      { text: "  funFact", class: colors.property },
+      { text: ": ", class: colors.punctuation },
+      { text: "\"Once debugged a bug that turned out to be a missing semicolon.", class: colors.string },
+      { text: "\n", class: "" },
+      { text: "    It took two hours. Now I triple-check.\"", class: colors.string },
       { text: ",", class: colors.punctuation },
+      { text: "\n", class: "" },
+
+      { text: "  philosophy", class: colors.property },
+      { text: ": ", class: colors.punctuation },
+      { text: "\"Write code as if the next person maintaining it is a time-traveling assassin.\"", class: colors.string },
       { text: "\n", class: "" },
 
       { text: "};", class: colors.punctuation },
@@ -174,7 +174,7 @@ const Hero = () => {
    return ( 
       <section ref={heroRef} className="relative w-full h-screen flex items-center justify-center bg-black text-[#e23720] font-mono"> 
          <div className="max-w-4xl w-full px-5"> 
-            <h1 className="text-xl sm:text-2xl md:text-3xl text-[#e23720]">Terminal: ~/portfolio</h1> 
+            <h1 className="text-xl sm:text-2xl md:text-3xl text-[#e23720]">User@veerasiva: ~/portfolio</h1> 
             <div ref={textContainerRef} className="mt-4 text-lg sm:text-xl md:text-2xl leading-relaxed whitespace-pre">
                {/* Text will be inserted here via JS */}
             </div> 
