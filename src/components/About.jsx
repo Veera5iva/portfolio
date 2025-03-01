@@ -35,7 +35,7 @@ const About = () => {
             <p className={`${styles.sectionSubText}`}>
                Introduction
             </p>
-            <h2 className={`${styles.sectionHeadText}`}>
+            <h2 className={`${styles.sectionHeadText}`} style={{ WebkitTextStroke: "2px #e23720" }}>
                Overview.
             </h2>
          </motion.div>
@@ -44,15 +44,15 @@ const About = () => {
             variants={fadeIn("", "", 0.1, 1)}
             className="mt-4 text-secondary text-[17px] max-w-3xl leading-[30px]"
          >
-            I'm a passionate Full-Stack Developer with expertise in JavaScript, TypeScript, React, and Next.js. I enjoy building scalable and user-friendly applications that solve real-world problems. Let's create something amazing together!
+            I'm a passionate Full-Stack Developer with expertise in JavaScript, TypeScript, React, Next.js and Node.js. I enjoy building scalable and user-friendly applications that solve real-world problems. Let's create something amazing together!
          </motion.p>
 
-         <div className="flex !flex-wrap !mt-20 !gap-10 justify-center items-center">
+         {/* <div className="flex !flex-wrap !mt-20 !gap-10 justify-center items-center">
             {services.map((service, index) => (
                <ServiceCard key={service.title} index={index} {...service} />
             ))}
 
-         </div>
+         </div> */}
          
       </>
    )
