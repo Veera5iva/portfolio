@@ -18,22 +18,22 @@ const Projects = () => {
                My Creations & Experiments
             </h2>
          </motion.div>
-         <div className="flex flex-wrap justify-center items-center gap-x-24 gap-y-8 !mt-10 p-1 bg-green-600">
+         <div className="flex flex-wrap justify-center items-center gap-x-24 gap-y-4">
             {projects.map((item) => (
                <div
-                  className="sm:h-[41rem] h-[32rem] lg:min-h-[32.5rem] flex items-center justify-center sm:w-[570px] w-[80vw] bg-red-600"
+                  className="sm:h-[37rem] h-[30rem] lg:min-h-[42rem] flex items-center justify-center sm:w-[480px] w-[80vw]"
                   key={item.id}
                >
                   <PinContainer
                      title={item.link}
                      href={item.link}
                   >
-                     <div className="relative flex items-center justify-center sm:w-[570px] w-[80vw] overflow-hidden sm:h-[40vh] h-[30vh] mb-10">
+                     <div className="relative flex items-center justify-center sm:w-[480px] w-[80vw] overflow-hidden sm:h-[42vh] h-[30vh] !mb-5">
                         <div
                            className="relative w-full h-full overflow-hidden lg:rounded-3xl"
                            style={{ backgroundColor: "#13162D" }}
                         >
-                           <img src="/bg.png" alt="bgimg" />
+                           {/* <img src="/bg.png" alt="bgimg" /> */}
                         </div>
                         <img
                            src={item.img}
@@ -47,7 +47,7 @@ const Projects = () => {
                      </h1>
 
                      <p
-                        className="lg:text-xl lg:font-normal font-light text-sm line-clamp-2"
+                        className="lg:text-xl lg:font-normal font-light text-sm line-clamp-3"
                         style={{
                            color: "#BEC1DD",
                            margin: "1vh 0",
@@ -56,7 +56,7 @@ const Projects = () => {
                         {item.des}
                      </p>
 
-                     <div className="flex items-center justify-between mt-7 mb-3">
+                     <div className="flex items-center justify-between !mt-5 !mb-4">
                         <div className="flex items-center">
                            {item.iconLists.map((icon, index) => (
                               <div
@@ -73,7 +73,7 @@ const Projects = () => {
 
                         <div className="flex justify-center items-center">
                            <p className="flex lg:text-xl md:text-xs text-sm text-purple">
-                              Check Live Site
+                              Check GitHub
                            </p>
                            {/* <FaLocationArrow className="ms-3" color="#CBACF9" /> */}
                         </div>
