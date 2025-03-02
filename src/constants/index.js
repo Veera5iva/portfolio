@@ -119,6 +119,8 @@ const technologies = [
    },
 ];
 
+const about = "I’m a Full-Stack Developer passionate about building scalable, user-friendly apps that solve real-world problems. I love clean code and turning ideas into impactful digital experiences. Let’s create something amazing together!";
+
 const experiences = [
    {
       title: "React.js Developer",
@@ -267,4 +269,4 @@ const projects = [
    },
 ];
 
-export { services, technologies, experiences, testimonials, projects };
+export { services, technologies, experiences, testimonials, projects, about };

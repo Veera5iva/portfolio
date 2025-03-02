@@ -1,61 +1,66 @@
-import { Tilt } from "react-tilt"
-import { motion } from "framer-motion"
-import { styles } from "../styles"
-import { services } from "../constants"
-import { fadeIn, textVariant } from "../utils/motion"
-import { SectionWrapper } from "../hoc"
-const ServiceCard = ({index, title, icon}) => {
-   return (
-      <Tilt className="xs:!w-[250px] !w-full flex">
-         <motion.div
-            variants={fadeIn("right", "spring", 0.5 * index, 0.75)}
-            className="w-full p-[1px] rounded-[20px] shadow-rose-800 shadow-lg border-rose-400 border-1"
-         >
-            <div
-               options={{
-                  max: 25,
-                  speed: 400,
-                  glare: true,
-               }}
-               className="bg-tertiary rounded-[20px] py-5 px-12 min-h-[280px] flex justify-evenly items-center flex-col"
-            >
-               <img src={icon} alt={title} className="w-16 h-16 object-contain" />
-               <h3 className="text-white text-[20px] font-bold text-center">{title}</h3>
+import { Tilt } from "react-tilt";
+import { motion } from "framer-motion";
+import { styles } from "../styles";
+import { about } from "../constants";
+import { textVariant } from "../utils/motion";
+import { SectionWrapper } from "../hoc";
+import { useRef, useEffect } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-            </div>
-         </motion.div>
+gsap.registerPlugin(ScrollTrigger);
 
-      </Tilt>
-   )
-}
 const About = () => {
+   const element = useRef(null);
+   const textRef = useRef(null);
+
+   useEffect(() => {
+      const words = textRef.current.innerText.split(" ");
+      textRef.current.innerHTML = words
+         .map((word) => `<span class="word">${word}</span>`)
+         .join(" ");
+
+      const wordElements = textRef.current.querySelectorAll(".word");
+
+      gsap.fromTo(
+         wordElements,
+         { opacity: 0.1 },
+         {
+            opacity: 1,
+            stagger: 0.1, // Controls delay between words
+            scrollTrigger: {
+               trigger: element.current,
+               start: "top 90%", // Starts when 80% of the section is in view
+               end: "bottom 40%", // Ends when 20% of the section leaves
+               scrub: true, // Makes it reverse when scrolling back up
+            },
+         }
+      );
+   }, []);
+
    return (
       <>
          <motion.div variants={textVariant()}>
-            <p className={`${styles.sectionSubText}`}>
-               Introduction
-            </p>
-            <h2 className={`${styles.sectionHeadText}`} style={{ WebkitTextStroke: "2px #e23720" }}>
+            <p className={`${styles.sectionSubText}`}>Introduction</p>
+            <h2
+               className={`${styles.sectionHeadText}`}
+               style={{ WebkitTextStroke: "2px #e23720" }}
+            >
                Overview.
             </h2>
          </motion.div>
 
-         <motion.p
-            variants={fadeIn("", "", 0.1, 1)}
-            className="mt-4 text-secondary text-[17px] max-w-3xl leading-[30px]"
+         <p
+            className="!mt-4 relative text-secondary text-[50px] leading-20"
+            ref={(el) => {
+               element.current = el;
+               textRef.current = el;
+            }}
          >
-            I'm a passionate Full-Stack Developer with expertise in JavaScript, TypeScript, React, Next.js and Node.js. I enjoy building scalable and user-friendly applications that solve real-world problems. Let's create something amazing together!
-         </motion.p>
-
-         {/* <div className="flex !flex-wrap !mt-20 !gap-10 justify-center items-center">
-            {services.map((service, index) => (
-               <ServiceCard key={service.title} index={index} {...service} />
-            ))}
-
-         </div> */}
-         
+            {about}
+         </p>
       </>
-   )
-}
+   );
+};
 
 export default SectionWrapper(About, "about");
