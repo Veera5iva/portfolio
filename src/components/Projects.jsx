@@ -18,7 +18,7 @@ const Projects = () => {
                My Creations & Experiments
             </h2>
          </motion.div>
-         <div className="flex flex-wrap justify-center items-center gap-x-24 gap-y-4">
+         <div className="flex flex-wrap justify-center items-center gap-x-30">
             {projects.map((item) => (
                <div
                   className="sm:h-[37rem] h-[30rem] lg:min-h-[42rem] flex items-center justify-center sm:w-[480px] w-[80vw]"
