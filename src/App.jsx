@@ -1,7 +1,7 @@
 import { BrowserRouter } from 'react-router-dom'
 import { About, Contact, Experience, Feedbacks, Hero, Navbar, Tech, Works, StarsCanvas } from './components'
 
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 const App = () => {
    const [loading, setLoading] = useState(true);
@@ -15,7 +15,7 @@ const App = () => {
    return (
       !loading && (
          <BrowserRouter>
-            <div className='relative z-0 bg-primary'>
+            <div className='relative z-0 bg-black'>
 
                <div className='bg-[url(/src/assets/herobg.png)] bg-cover bg-no-repeat bg-center'>
                   <Navbar />
@@ -23,7 +23,6 @@ const App = () => {
                </div>
 
                <About />
-               <Experience />
                <Tech />
                <Works />
                <Feedbacks />

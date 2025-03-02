@@ -45,8 +45,8 @@ const Experience = () => {
             <p className={`${styles.sectionSubText}`}>
                What I have done so far
             </p>
-            <h2 className={`${styles.sectionHeadText}`}>
-               Experience.
+            <h2 className={`${styles.sectionHeadText}`} style={{ WebkitTextStroke: "2px #e23720" }}>
+               Experience
             </h2>
 
          </motion.div>
