@@ -41,12 +41,12 @@ const About = () => {
    return (
       <>
          <motion.div variants={textVariant()}>
-            <p className={`${styles.sectionSubText}`}>Introduction</p>
+            <p className={`${styles.sectionSubText}`}>Who am I? (Still figuring it out...)</p>
             <h2
                className={`${styles.sectionHeadText}`}
                style={{ WebkitTextStroke: "2px #e23720" }}
             >
-               Overview.
+               A Little Bit About Me
             </h2>
          </motion.div>
 
