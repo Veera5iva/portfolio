@@ -173,10 +173,10 @@ const Hero = () => {
    }, []);
 
    return (
-      <section ref={heroRef} className="relative w-full h-screen flex items-center justify-center bg-black text-[#e23720] font-mono">
-         <div className="max-w-4xl w-full px-5">
+      <section ref={heroRef} className="relative w-full h-screen flex items-center justify-center bg-black text-[#e23720] font-mono overflow-hidden">
+         <div className="md:max-w-4xl w-full px-5 relative md:right-14 right-[-9px]">
             <h1 className="text-xl sm:text-2xl md:text-3xl text-[#e23720]">User@veerasiva: ~/portfolio</h1>
-            <div ref={textContainerRef} className="mt-4 text-lg sm:text-xl md:text-2xl leading-relaxed whitespace-pre">
+            <div ref={textContainerRef} className="mt-4 text-[14.5px] sm:text-xl md:text-2xl leading-relaxed whitespace-pre">
                {/* Text will be inserted here via JS */}
             </div>
          </div>
