@@ -1,4 +1,4 @@
-import { EarthCanvas, BallCanvas, ComputersCanvas, StarsCanvas } from './canvas';
+import { BallCanvas, ComputersCanvas } from './canvas';
 import Hero from './Hero';
 import Navbar from './header/Navbar';
 import About from './About';
@@ -6,7 +6,7 @@ import Tech from './Tech';
 import Experience from './Experience';
 import Projects from './Projects';
 import Contact from './Contact';
-import PinContainer from './PinContainer';
+import Footer from './Footer';
 
 export {
   Hero,
@@ -16,9 +16,7 @@ export {
   Experience,
   Projects,
   Contact,
-  EarthCanvas, 
   BallCanvas, 
-  ComputersCanvas, 
-  StarsCanvas, 
-  PinContainer
+  ComputersCanvas,
+  Footer
 }
