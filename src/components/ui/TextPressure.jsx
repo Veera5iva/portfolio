@@ -20,12 +20,11 @@ const TextPressure = ({
    className = '',
 
    minFontSize = 24,
-   debug = true, // Add debug mode to visualize effect
+   debug = false, // Set debug to false by default
 }) => {
    const containerRef = useRef(null);
    const titleRef = useRef(null);
    const spansRef = useRef([]);
-   const debugRef = useRef(null);
 
    const mouseRef = useRef({ x: 0, y: 0 });
    const cursorRef = useRef({ x: 0, y: 0 });
@@ -36,6 +35,7 @@ const TextPressure = ({
    const [isActive, setIsActive] = useState(false);
    const [containerWidth, setContainerWidth] = useState('auto');
    const [containerHeight, setContainerHeight] = useState('auto');
+   const [loaded, setLoaded] = useState(false);
 
    const chars = text.split('');
 
@@ -55,12 +55,6 @@ const TextPressure = ({
          cursorRef.current.x = e.clientX;
          cursorRef.current.y = e.clientY;
          setIsActive(true);
-
-         // Update debug circle position
-         if (debug && debugRef.current) {
-            debugRef.current.style.left = `${e.clientX}px`;
-            debugRef.current.style.top = `${e.clientY}px`;
-         }
       };
 
       const handleMouseLeave = () => {
@@ -76,12 +70,6 @@ const TextPressure = ({
          cursorRef.current.x = t.clientX;
          cursorRef.current.y = t.clientY;
          setIsActive(true);
-
-         // Update debug circle position
-         if (debug && debugRef.current) {
-            debugRef.current.style.left = `${t.clientX}px`;
-            debugRef.current.style.top = `${t.clientY}px`;
-         }
       };
 
       window.addEventListener('mousemove', handleMouseMove);
@@ -108,7 +96,7 @@ const TextPressure = ({
             containerRef.current.removeEventListener('mouseleave', handleMouseLeave);
          }
       };
-   }, [debug]);
+   }, []);
 
    // Set size based on container
    const setSize = () => {
@@ -141,15 +129,43 @@ const TextPressure = ({
 
          // Set container height to match text height exactly
          setContainerHeight(`${textRect.height}px`);
+         setLoaded(true);
       });
    };
 
-   // Handle resize
+   // Handle initial layout and resize
    useEffect(() => {
+      // Run setSize on mount to initialize properly
       setSize();
+
+      // Add a small delay to ensure DOM is fully rendered
+      const initialTimer = setTimeout(() => {
+         setSize();
+      }, 100);
+
       window.addEventListener('resize', setSize);
-      return () => window.removeEventListener('resize', setSize);
+
+      return () => {
+         clearTimeout(initialTimer);
+         window.removeEventListener('resize', setSize);
+      };
    }, [scale, text]);
+
+   // Force another layout calculation when font loads
+   useEffect(() => {
+      // Create a FontFace observer to detect when the font is loaded
+      if (window.document) {
+         const fontLoader = new FontFace(fontFamily, `url(${fontUrl})`);
+         fontLoader.load().then(() => {
+            // Font has loaded, update layout
+            setSize();
+         }).catch(err => {
+            console.warn('Font loading error:', err);
+            // Still try to set size with fallback font
+            setSize();
+         });
+      }
+   }, [fontFamily, fontUrl]);
 
    // Main animation effect
    useEffect(() => {
@@ -215,11 +231,6 @@ const TextPressure = ({
                } else {
                   span.style.color = textColor;
                }
-
-               // Log first character for debugging
-               if (debug && idx === 0) {
-                  console.log(`Char: ${chars[idx]}, Distance: ${d.toFixed(0)}px, wdth: ${wdth}, wght: ${wght}`);
-               }
             });
          }
 
@@ -228,7 +239,7 @@ const TextPressure = ({
 
       animate();
       return () => cancelAnimationFrame(rafId);
-   }, [width, weight, italic, alpha, chars.length, isActive, textColor, debug]);
+   }, [width, weight, italic, alpha, chars.length, isActive, textColor]);
 
    return (
       <div
@@ -237,7 +248,8 @@ const TextPressure = ({
          style={{
             width: containerWidth,
             height: containerHeight,
-            minHeight: '1em'
+            minHeight: '1em',
+            visibility: loaded ? 'visible' : 'hidden'
          }}
       >
          <style>{`
@@ -275,17 +287,6 @@ const TextPressure = ({
           z-index: -1;
           -webkit-text-stroke-width: ${strokeWidth}px;
           -webkit-text-stroke-color: ${strokeColor};
-        }
-        
-        .debug-cursor {
-          position: fixed;
-          width: 200px;
-          height: 200px;
-          border-radius: 50%;
-          background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 70%);
-          transform: translate(-50%, -50%);
-          pointer-events: none;
-          z-index: 9999;
         }
       `}</style>
 
@@ -326,8 +327,6 @@ const TextPressure = ({
                </span>
             ))}
          </h1>
-
-         {debug && <div ref={debugRef}></div>}
       </div>
    );
 };
