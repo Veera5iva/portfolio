@@ -20,7 +20,13 @@ const TextPressure = ({
    className = '',
 
    minFontSize = 24,
-   debug = false, // Set debug to false by default
+   debug = false,
+   
+   // CUSTOMIZE: Add these new props with defaults
+   letterSpacing = '0.02em',   // ADJUST: Change value to increase/decrease letter spacing
+   textHeight = 1,             // ADJUST: Change value to increase/decrease overall height (1 is normal)
+   hoverColor = '#FF0000',     // ADJUST: Change to your preferred hover color
+   hoverScale = 1.1,           // ADJUST: How much a letter grows when hovered (1 is no change)
 }) => {
    const containerRef = useRef(null);
    const titleRef = useRef(null);
@@ -31,11 +37,12 @@ const TextPressure = ({
 
    const [fontSize, setFontSize] = useState(minFontSize);
    const [scaleY, setScaleY] = useState(1);
-   const [lineHeight, setLineHeight] = useState(1);
+   const [lineHeight, setLineHeight] = useState(textHeight); // Use the textHeight prop
    const [isActive, setIsActive] = useState(false);
    const [containerWidth, setContainerWidth] = useState('auto');
    const [containerHeight, setContainerHeight] = useState('auto');
    const [loaded, setLoaded] = useState(false);
+   const [hoveredIndex, setHoveredIndex] = useState(-1); // Track which letter is hovered
 
    const chars = text.split('');
 
@@ -115,7 +122,7 @@ const TextPressure = ({
 
       setFontSize(newFontSize);
       setScaleY(1);
-      setLineHeight(1);
+      setLineHeight(textHeight); // Initialize with the custom height
 
       requestAnimationFrame(() => {
          if (!titleRef.current) return;
@@ -123,8 +130,8 @@ const TextPressure = ({
 
          if (scale && textRect.height > 0) {
             const yRatio = containerRef.current.clientHeight / textRect.height;
-            setScaleY(yRatio);
-            setLineHeight(yRatio);
+            setScaleY(yRatio * textHeight); // Apply custom height factor
+            setLineHeight(yRatio * textHeight);
          }
 
          // Set container height to match text height exactly
@@ -149,23 +156,43 @@ const TextPressure = ({
          clearTimeout(initialTimer);
          window.removeEventListener('resize', setSize);
       };
-   }, [scale, text]);
+   }, [scale, text, textHeight]); // Added textHeight dependency
 
    // Force another layout calculation when font loads
    useEffect(() => {
       // Create a FontFace observer to detect when the font is loaded
       if (window.document) {
-         const fontLoader = new FontFace(fontFamily, `url(${fontUrl})`);
-         fontLoader.load().then(() => {
-            // Font has loaded, update layout
-            setSize();
-         }).catch(err => {
-            console.warn('Font loading error:', err);
-            // Still try to set size with fallback font
-            setSize();
-         });
+         try {
+            const fontLoader = new FontFace(fontFamily, `url(${fontUrl})`);
+            fontLoader.load().then(() => {
+               // Font has loaded, update layout
+               setSize();
+            }).catch(err => {
+               console.warn('Font loading error:', err);
+               // Still try to set size with fallback font
+               setSize();
+            });
+         } catch (e) {
+            // Fallback if FontFace API is not available
+            console.warn('FontFace API not available:', e);
+            
+            // Create a hidden element with the font to trigger loading
+            const fontLoader = document.createElement('div');
+            fontLoader.style.fontFamily = fontFamily;
+            fontLoader.style.visibility = 'hidden';
+            fontLoader.style.position = 'absolute';
+            fontLoader.style.pointerEvents = 'none';
+            fontLoader.innerText = text;
+            document.body.appendChild(fontLoader);
+            
+            // Give the font some time to load
+            setTimeout(() => {
+               setSize();
+               document.body.removeChild(fontLoader);
+            }, 500);
+         }
       }
-   }, [fontFamily, fontUrl]);
+   }, [fontFamily, fontUrl, text]);
 
    // Main animation effect
    useEffect(() => {
@@ -193,6 +220,7 @@ const TextPressure = ({
                };
 
                const d = dist(mouseRef.current, charCenter);
+               const isHovered = idx === hoveredIndex;
 
                // Modify the attribute calculation to be more intense
                const getAttr = (distance, minVal, maxVal) => {
@@ -217,19 +245,29 @@ const TextPressure = ({
                if (!italic && !width) {
                   // If not using font variations, use scale/weight as fallback
                   const scale = getAttr(d, 1, 1.5);
-                  span.style.transform = `scale(${scale})`;
+                  span.style.transform = isHovered ? `scale(${hoverScale})` : `scale(${scale})`;
                   span.style.fontWeight = wght;
                } else {
                   // Apply variable font settings if supported
                   span.style.fontVariationSettings = `'wght' ${wght}, 'wdth' ${wdth}, 'ital' ${italVal}`;
+                  if (isHovered) {
+                     span.style.transform = `scale(${hoverScale})`;
+                  } else {
+                     span.style.transform = 'scale(1)';
+                  }
                }
 
-               // Add direct color change as fallback visual effect
-               if (d < maxDist) {
+               // CUSTOMIZE: Change color based on hover state
+               if (isHovered) {
+                  span.style.color = hoverColor;
+                  span.style.zIndex = '1';
+               } else if (d < maxDist) {
                   const intensity = 1 - (d / maxDist);
                   span.style.color = `rgba(255, 255, 255, ${0.5 + 0.5 * intensity})`;
+                  span.style.zIndex = '0';
                } else {
                   span.style.color = textColor;
+                  span.style.zIndex = '0';
                }
             });
          }
@@ -239,7 +277,7 @@ const TextPressure = ({
 
       animate();
       return () => cancelAnimationFrame(rafId);
-   }, [width, weight, italic, alpha, chars.length, isActive, textColor]);
+   }, [width, weight, italic, alpha, chars.length, isActive, textColor, hoveredIndex, hoverColor, hoverScale]);
 
    return (
       <div
@@ -271,6 +309,7 @@ const TextPressure = ({
           display: inline-block;
           transition: transform 0.15s ease-out, color 0.15s ease-out, opacity 0.15s ease-out;
           will-change: transform, color, opacity, font-variation-settings;
+          position: relative; /* Add this for z-index to work */
         }
         
         .stroke span {
@@ -301,7 +340,7 @@ const TextPressure = ({
                transformOrigin: 'center top',
                margin: 0,
                color: stroke ? undefined : textColor,
-               letterSpacing: '0.02em',
+               letterSpacing, // CUSTOMIZE: Use the letterSpacing prop
                padding: '0',
                display: 'flex',
                justifyContent: flex ? 'space-between' : 'center',
@@ -317,6 +356,8 @@ const TextPressure = ({
                   }}
                   data-char={char}
                   className="inline-block transition-all duration-150"
+                  onMouseEnter={() => setHoveredIndex(i)} // CUSTOMIZE: Track hovered letter
+                  onMouseLeave={() => setHoveredIndex(-1)} // CUSTOMIZE: Reset when not hovering
                   style={{
                      margin: '0',
                      flexGrow: flex ? 1 : 0,
