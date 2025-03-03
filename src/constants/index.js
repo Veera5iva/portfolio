@@ -205,36 +205,67 @@ const testimonials = [
 
 const projects = [
    {
-      id: 1,
-      title: "3D Solar System Planets to Explore",
-      des: "Explore the wonders of our solar system with this captivating 3D simulation of the planets using Three.js.",
-      img: "/p1.svg",
-      iconLists: ["/re.svg", "/tail.svg", "/ts.svg", "/three.svg", "/fm.svg"],
-      link: "/ui.earth.com",
+      name: "Car Rent",
+      description:
+         "Web-based platform that allows users to search, book, and manage car rentals from various providers, providing a convenient and efficient solution for transportation needs.",
+      tags: [
+         {
+            name: "react",
+            color: "blue-text-gradient",
+         },
+         {
+            name: "mongodb",
+            color: "green-text-gradient",
+         },
+         {
+            name: "tailwind",
+            color: "pink-text-gradient",
+         },
+      ],
+      image: carrent,
+      source_code_link: "https://github.com/",
    },
    {
-      id: 2,
-      title: "Yoom - Video Conferencing App",
-      des: "Simplify your video conferencing experience with Yoom. Seamlessly connect with colleagues and friends.",
-      img: "/p2.svg",
-      iconLists: ["/next.svg", "/tail.svg", "/ts.svg", "/stream.svg", "/c.svg"],
-      link: "/ui.yoom.com",
+      name: "Job IT",
+      description:
+         "Web application that enables users to search for job openings, view estimated salary ranges for positions, and locate available jobs based on their current location.",
+      tags: [
+         {
+            name: "react",
+            color: "blue-text-gradient",
+         },
+         {
+            name: "restapi",
+            color: "green-text-gradient",
+         },
+         {
+            name: "scss",
+            color: "pink-text-gradient",
+         },
+      ],
+      image: jobit,
+      source_code_link: "https://github.com/",
    },
    {
-      id: 3,
-      title: "AI Image SaaS - Canva Application",
-      des: "A REAL Software-as-a-Service app with AI features and a payments and credits system using the latest tech stack.",
-      img: "/p3.svg",
-      iconLists: ["/re.svg", "/tail.svg", "/ts.svg", "/three.svg", "/c.svg"],
-      link: "/ui.aiimg.com",
-   },
-   {
-      id: 4,
-      title: "Animated Apple Iphone 3D Website",
-      des: "Recreated the Apple iPhone 15 Pro website, combining GSAP animations and Three.js 3D effects..",
-      img: "/p4.svg",
-      iconLists: ["/next.svg", "/tail.svg", "/ts.svg", "/three.svg", "/gsap.svg"],
-      link: "/ui.apple.com",
+      name: "Trip Guide",
+      description:
+         "A comprehensive travel booking platform that allows users to book flights, hotels, and rental cars, and offers curated recommendations for popular destinations.",
+      tags: [
+         {
+            name: "nextjs",
+            color: "blue-text-gradient",
+         },
+         {
+            name: "supabase",
+            color: "green-text-gradient",
+         },
+         {
+            name: "css",
+            color: "pink-text-gradient",
+         },
+      ],
+      image: tripguide,
+      source_code_link: "https://github.com/",
    },
 ];
 

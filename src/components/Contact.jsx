@@ -7,7 +7,7 @@ import { styles } from "../styles"
 
 const FormInput = ({ label, name, type = "text", placeholder, value, onChange, required = true }) => (
    <label className="space-y-2 sm:space-y-3 w-full">
-      <span className="text-base sm:text-lg font-medium text-[#e23720]/80">{label}</span>
+      <span className="text-base sm:text-lg font-medium text-[#e23720]">{label}</span>
       <div className="relative group">
          <input
             type={type}
@@ -30,7 +30,7 @@ const FormInput = ({ label, name, type = "text", placeholder, value, onChange, r
 
 const FormTextarea = ({ label, name, placeholder, value, onChange, required = true }) => (
    <label className="space-y-2 sm:space-y-3 w-full">
-      <span className="text-base sm:text-lg font-medium text-[#e23720]/80">{label}</span>
+      <span className="text-base sm:text-lg font-medium text-[#e23720]">{label}</span>
       <div className="relative group">
          <textarea
             name={name}
@@ -57,7 +57,7 @@ const SubmitButton = ({ onClick, isSubmitting }) => (
       onClick={onClick}
       className="w-full bg-gradient-to-r from-[#e23720] to-[#e23720]/80 
               hover:from-[#e23720]/90 hover:to-[#e23720]/70 
-              text-white py-3 sm:py-4 min-h-12 sm:min-h-14 rounded-lg text-base sm:text-lg font-medium 
+              text-black/90 py-3 sm:py-4 min-h-12 sm:min-h-14 rounded-lg text-base sm:text-lg font-medium 
               shadow-[0_5px_15px_rgba(226,55,32,0.25)] 
               hover:shadow-[0_5px_25px_rgba(226,55,32,0.4)] 
               transition-all duration-300 border-0 cursor-pointer

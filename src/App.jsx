@@ -1,5 +1,5 @@
 import { BrowserRouter } from 'react-router-dom'
-import { About, Contact, Experience, Feedbacks, Hero, Navbar, Tech, Projects, StarsCanvas } from './components'
+import { About, Contact, Hero, Navbar, Tech, Projects, StarsCanvas } from './components'
 import { useState } from 'react'
 
 const App = () => {

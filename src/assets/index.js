@@ -33,6 +33,7 @@ import jobit from "./jobit.png";
 import tripguide from "./tripguide.png";
 
 import heroVideo from "./heroVideo.mp4";
+import terminal from "./terminal.png";
 
 export {
   veeraLogo,
@@ -66,4 +67,5 @@ export {
   carrent,
   jobit,
   tripguide,
+  terminal,
 };
