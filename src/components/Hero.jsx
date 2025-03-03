@@ -9,6 +9,7 @@ const Hero = () => {
    const heroRef = useRef(null);
    const textContainerRef = useRef(null);
    const cursorRef = useRef(null);
+   const isMobileRef = useRef(window.innerWidth < 640); // Track mobile state
 
    // Define GitHub-like syntax highlighting colors
    const colors = {
@@ -23,70 +24,150 @@ const Hero = () => {
       default: "text-[#e23720]"       // default text color (custom red)
    };
 
-   // Full text that will be typed with tokens for syntax highlighting
-   const codeTokens = [
-      { text: "const ", class: colors.keyword },
-      { text: "response ", class: colors.variable },
-      { text: "= ", class: colors.punctuation },
-      { text: "await ", class: colors.keyword },
-      { text: "axios", class: colors.variable },
-      { text: ".", class: colors.punctuation },
-      { text: "get", class: colors.method },
-      { text: "(", class: colors.bracket },
-      { text: "\"/api/portfolio/hero-section\"", class: colors.string },
-      { text: ");", class: colors.punctuation },
-      { text: "\n", class: "" },
+   // Function to get code tokens based on screen size
+   const getCodeTokens = (isMobile) => {
+      // For desktop, use the original strings
+      if (!isMobile) {
+         return [
+            { text: "const ", class: colors.keyword },
+            { text: "response ", class: colors.variable },
+            { text: "= ", class: colors.punctuation },
+            { text: "await ", class: colors.keyword },
+            { text: "axios", class: colors.variable },
+            { text: ".", class: colors.punctuation },
+            { text: "get", class: colors.method },
+            { text: "(", class: colors.bracket },
+            { text: "\"/api/portfolio/hero-section\"", class: colors.string },
+            { text: ");", class: colors.punctuation },
+            { text: "\n", class: "" },
 
-      { text: "console", class: colors.variable },
-      { text: ".", class: colors.punctuation },
-      { text: "log", class: colors.method },
-      { text: "(", class: colors.bracket },
-      { text: "response", class: colors.variable },
-      { text: ".", class: colors.punctuation },
-      { text: "data", class: colors.variable },
-      { text: ".", class: colors.punctuation },
-      { text: "data", class: colors.variable },
-      { text: ");", class: colors.punctuation },
-      { text: "\n", class: "" },
-      { text: "\n", class: "" },
+            { text: "console", class: colors.variable },
+            { text: ".", class: colors.punctuation },
+            { text: "log", class: colors.method },
+            { text: "(", class: colors.bracket },
+            { text: "response", class: colors.variable },
+            { text: ".", class: colors.punctuation },
+            { text: "data", class: colors.variable },
+            { text: ".", class: colors.punctuation },
+            { text: "data", class: colors.variable },
+            { text: ");", class: colors.punctuation },
+            { text: "\n", class: "" },
+            { text: "\n", class: "" },
 
-      { text: "const ", class: colors.keyword },
-      { text: "data ", class: colors.variable },
-      { text: "= {", class: colors.bracket },
-      { text: "\n", class: "" },
+            { text: "const ", class: colors.keyword },
+            { text: "data ", class: colors.variable },
+            { text: "= {", class: colors.bracket },
+            { text: "\n", class: "" },
 
-      { text: "  name", class: colors.property },
-      { text: ": ", class: colors.punctuation },
-      { text: "\"Veerasiva\"", class: colors.string },
-      { text: ",", class: colors.punctuation },
-      { text: "\n", class: "" },
+            { text: "  name", class: colors.property },
+            { text: ": ", class: colors.punctuation },
+            { text: "\"Veerasiva\"", class: colors.string },
+            { text: ",", class: colors.punctuation },
+            { text: "\n", class: "" },
 
-      { text: "  headline", class: colors.property },
-      { text: ": ", class: colors.punctuation },
-      { text: "\"Turning caffeine into code & ideas into applications\"", class: colors.string },
-      { text: ",", class: colors.punctuation },
-      { text: "\n", class: "" },
+            { text: "  headline", class: colors.property },
+            { text: ": ", class: colors.punctuation },
+            { text: "\"Turning caffeine into code & ideas into applications\"", class: colors.string },
+            { text: ",", class: colors.punctuation },
+            { text: "\n", class: "" },
 
-      { text: "  funFact", class: colors.property },
-      { text: ": ", class: colors.punctuation },
-      { text: "\"Once debugged a bug that turned out to be a missing semicolon.", class: colors.string },
-      { text: "\n", class: "" },
-      { text: "    It took two hours. Now I triple-check.\"", class: colors.string },
-      { text: ",", class: colors.punctuation },
-      { text: "\n", class: "" },
+            { text: "  funFact", class: colors.property },
+            { text: ": ", class: colors.punctuation },
+            { text: "\"Once debugged a bug that turned out to be a missing semicolon.", class: colors.string },
+            { text: "\n", class: "" },
+            { text: "    It took two hours. Now I triple-check.\"", class: colors.string },
+            { text: ",", class: colors.punctuation },
+            { text: "\n", class: "" },
 
-      { text: "  philosophy", class: colors.property },
-      { text: ": ", class: colors.punctuation },
-      { text: "\"Write code as if the next person maintaining it is a time-traveling assassin.\"", class: colors.string },
-      { text: "\n", class: "" },
+            { text: "  philosophy", class: colors.property },
+            { text: ": ", class: colors.punctuation },
+            { text: "\"Write code as if the next person maintaining it is a time-traveling assassin.\"", class: colors.string },
+            { text: "\n", class: "" },
 
-      { text: "};", class: colors.punctuation },
-   ];
+            { text: "};", class: colors.punctuation },
+         ];
+      }
+      // For mobile, adjust specific strings to break where requested
+      else {
+         return [
+            { text: "const ", class: colors.keyword },
+            { text: "response ", class: colors.variable },
+            { text: "= ", class: colors.punctuation },
+            { text: "await ", class: colors.keyword },
+            { text: "axios", class: colors.variable },
+            { text: ".", class: colors.punctuation },
+            { text: "get", class: colors.method },
+            { text: "(", class: colors.bracket },
+            { text: "\"/api/portfolio/hero-section\"", class: colors.string },
+            { text: ");", class: colors.punctuation },
+            { text: "\n", class: "" },
+
+            { text: "console", class: colors.variable },
+            { text: ".", class: colors.punctuation },
+            { text: "log", class: colors.method },
+            { text: "(", class: colors.bracket },
+            { text: "response", class: colors.variable },
+            { text: ".", class: colors.punctuation },
+            { text: "data", class: colors.variable },
+            { text: ".", class: colors.punctuation },
+            { text: "data", class: colors.variable },
+            { text: ");", class: colors.punctuation },
+            { text: "\n", class: "" },
+            { text: "\n", class: "" },
+
+            { text: "const ", class: colors.keyword },
+            { text: "data ", class: colors.variable },
+            { text: "= {", class: colors.bracket },
+            { text: "\n", class: "" },
+
+            { text: "  name", class: colors.property },
+            { text: ": ", class: colors.punctuation },
+            { text: "\"Veerasiva\"", class: colors.string },
+            { text: ",", class: colors.punctuation },
+            { text: "\n", class: "" },
+
+            { text: "  headline", class: colors.property },
+            { text: ": ", class: colors.punctuation },
+            { text: "\"Turning caffeine into code & ideas into applications\"", class: colors.string },
+            { text: ",", class: colors.punctuation },
+            { text: "\n", class: "" },
+
+            { text: "  funFact", class: colors.property },
+            { text: ": ", class: colors.punctuation },
+            { text: "\"Once debugged a bug that turned out to be a missing", class: colors.string },
+            { text: "\n", class: "" },
+            { text: "    semicolon. It took two hours. Now I triple-check.\"", class: colors.string },
+            { text: ",", class: colors.punctuation },
+            { text: "\n", class: "" },
+
+            { text: "  philosophy", class: colors.property },
+            { text: ": ", class: colors.punctuation },
+            { text: "\"Write code as if the next person maintaining it is a", class: colors.string },
+            { text: "\n", class: "" },
+            { text: "    time-traveling assassin.\"", class: colors.string },
+            { text: "\n", class: "" },
+
+            { text: "};", class: colors.punctuation },
+         ];
+      }
+   };
+
+   // Get the appropriate tokens based on screen size
+   const codeTokens = getCodeTokens(isMobileRef.current);
 
    // Calculate the total number of characters
    const totalChars = codeTokens.reduce((sum, token) => sum + token.text.length, 0);
 
    useEffect(() => {
+      // Handle window resize to update mobile state
+      const handleResize = () => {
+         isMobileRef.current = window.innerWidth < 640;
+         // Force a ScrollTrigger refresh to update the content
+         ScrollTrigger.refresh();
+      };
+
+      window.addEventListener('resize', handleResize);
+
       // Only create elements if they don't already exist
       if (!cursorRef.current) {
          // Create glowing cursor element with custom color
@@ -118,9 +199,13 @@ const Hero = () => {
          pin: true,
          scrub: 1,
          onUpdate: (self) => {
+            // Get the current tokens based on screen size
+            const currentTokens = getCodeTokens(isMobileRef.current);
+
             // Calculate how many characters to show based on scroll progress
             const progress = self.progress;
-            const targetCharCount = Math.floor(progress * totalChars);
+            const currentTotalChars = currentTokens.reduce((sum, token) => sum + token.text.length, 0);
+            const targetCharCount = Math.floor(progress * currentTotalChars);
 
             // Clear the code container
             codeContainer.innerHTML = '';
@@ -129,8 +214,8 @@ const Hero = () => {
             let charCount = 0;
 
             // For each token
-            for (let i = 0; i < codeTokens.length; i++) {
-               const token = codeTokens[i];
+            for (let i = 0; i < currentTokens.length; i++) {
+               const token = currentTokens[i];
                const tokenLength = token.text.length;
 
                // If we haven't reached this token yet, break
@@ -169,14 +254,15 @@ const Hero = () => {
 
       return () => {
          if (scrollTrigger) scrollTrigger.kill();
+         window.removeEventListener('resize', handleResize);
       };
    }, []);
 
    return (
-      <section ref={heroRef} className="relative w-full h-screen flex items-center justify-center bg-black text-[#e23720] font-mono">
-         <div className="max-w-4xl w-full px-5">
+      <section ref={heroRef} className="relative w-full h-screen flex items-center justify-center bg-black text-[#e23720] font-mono overflow-hidden">
+         <div className="md:max-w-4xl w-full px-5 relative md:right-14 right-[-6px]">
             <h1 className="text-xl sm:text-2xl md:text-3xl text-[#e23720]">User@veerasiva: ~/portfolio</h1>
-            <div ref={textContainerRef} className="mt-4 text-lg sm:text-xl md:text-2xl leading-relaxed whitespace-pre">
+            <div ref={textContainerRef} className="mt-4 text-[14.5px] sm:text-xl md:text-2xl leading-relaxed whitespace-pre">
                {/* Text will be inserted here via JS */}
             </div>
          </div>
@@ -194,7 +280,6 @@ const Hero = () => {
                }}
                className="absolute bottom-10 left-1/2 transform -translate-x-1/2 w-6 h-6 rounded-full bg-[#e23720]"
             />
-
          </div>
       </section>
    );
