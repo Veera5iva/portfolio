@@ -3,10 +3,10 @@ const Footer = () => {
    return (
       <div className="">
          <TextPressure
-            text="Veerasiva"
+            text="Veerasiva!"
             flex={true}
             alpha={false}
-            stroke={false}
+            stroke={true}
             width={true}
             weight={true}
             italic={true}
@@ -14,7 +14,7 @@ const Footer = () => {
             strokeColor="#ff0000"
             minFontSize={36}
             letterSpacing="0.05em"
-            textHeight={1}
+            textHeight={0.9}
             hoverColor="#e23720"
             hoverScale={1.15}
          />
