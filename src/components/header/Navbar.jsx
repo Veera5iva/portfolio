@@ -1,12 +1,14 @@
-import { Link } from "react-router-dom";
-import { styles } from "../../styles";
-import { veeraLogo } from "../../assets";
-import { useEffect, useState, useRef } from "react";
-import Menu from "./menu/Menu";
-import Nav from "./nav/Nav";
-import style from "./style.module.scss";
-import { motion, AnimatePresence } from "framer-motion";
-import gsap from "gsap";
+"use client"
+
+import { Link } from "react-router-dom"
+import { styles } from "../../styles"
+import { veeraLogo } from "../../assets"
+import { useEffect, useState, useRef } from "react"
+import Menu from "./menu/Menu"
+import Nav from "./nav/Nav"
+import style from "./style.module.scss"
+import { motion, AnimatePresence } from "framer-motion"
+import gsap from "gsap"
 
 const menu = {
     open: {
@@ -14,88 +16,33 @@ const menu = {
         height: "570px",
         top: "-25px",
         right: "-25px",
-        transition: { duration: 0.75, type: "tween", ease: [0.76, 0, 0.24, 1] }
+        transition: { duration: 0.75, type: "tween", ease: [0.76, 0, 0.24, 1] },
     },
     closed: {
         width: "100px",
         height: "40px",
         top: "0px",
         right: "0px",
-        transition: { duration: 0.75, delay: 0.35, type: "tween", ease: [0.76, 0, 0.24, 1] }
-    }
-};
-
-// Animation for internal elements
-const logoVariants = {
-    hidden: {
-        opacity: 0,
-        y: 20,
-        scale: 0.9
+        transition: { duration: 0.75, delay: 0.35, type: "tween", ease: [0.76, 0, 0.24, 1] },
     },
-    visible: {
-        opacity: 1,
-        y: 0,
-        scale: 1,
-        transition: {
-            duration: 0.4,
-            ease: [0.25, 1, 0.5, 1],
-            delay: 0.1
-        }
-    },
-    exit: {
-        opacity: 0,
-        y: 10,
-        scale: 0.95,
-        transition: {
-            duration: 0.2,
-            ease: "easeIn"
-        }
-    }
-};
-
-const menuVariants = {
-    hidden: {
-        opacity: 0,
-        y: 20,
-        scale: 0.9
-    },
-    visible: {
-        opacity: 1,
-        y: 0,
-        scale: 1,
-        transition: {
-            duration: 0.4,
-            ease: [0.25, 1, 0.5, 1],
-            delay: 0.2 // Slightly delayed from logo
-        }
-    },
-    exit: {
-        opacity: 0,
-        y: 10,
-        scale: 0.95,
-        transition: {
-            duration: 0.2,
-            ease: "easeIn"
-        }
-    }
-};
+}
 
 const contentVariants = {
     visible: {
         opacity: 1,
         transition: {
             duration: 0.3,
-            ease: "easeOut"
-        }
+            ease: "easeOut",
+        },
     },
     hidden: {
         opacity: 0,
         transition: {
             duration: 0.2,
-            ease: "easeIn"
-        }
-    }
-};
+            ease: "easeIn",
+        },
+    },
+}
 
 const indicatorVariants = {
     initial: { opacity: 0, scale: 0 },
@@ -104,176 +51,139 @@ const indicatorVariants = {
         scale: 1,
         transition: {
             duration: 0.3,
-            ease: "easeOut"
-        }
+            ease: "easeOut",
+        },
     },
     exit: {
         opacity: 0,
         scale: 0,
         transition: {
-            duration: 0.2
-        }
+            duration: 0.2,
+        },
     },
     pulse: {
         scale: [1, 1.05, 1],
         opacity: [0.9, 1, 0.9],
         transition: {
-            repeat: Infinity,
+            repeat: Number.POSITIVE_INFINITY,
             repeatType: "reverse",
             duration: 2.5,
-            ease: "easeInOut"
-        }
-    }
-};
+            ease: "easeInOut",
+        },
+    },
+}
 
 const Navbar = () => {
-    const [isActive, setIsActive] = useState(false);
-    const [isExpanded, setIsExpanded] = useState(true);
-    const [userInteracted, setUserInteracted] = useState(false);
-    const [isShrinking, setIsShrinking] = useState(false);
-    const [isPulsing, setIsPulsing] = useState(false);
+    const [isActive, setIsActive] = useState(false)
+    const [isExpanded, setIsExpanded] = useState(true)
+    const [userInteracted, setUserInteracted] = useState(false)
+    const [isShrinking, setIsShrinking] = useState(false)
+    const [isPulsing, setIsPulsing] = useState(false)
 
-    const navbarRef = useRef(null);
-    const logoRef = useRef(null);
-    const menuContainerRef = useRef(null);
-    const progressRef = useRef(null);
-    const shrinkTimerRef = useRef(null);
-    const navTimeline = useRef(null);
-    const contentTimeline = useRef(null);
+    const navbarRef = useRef(null)
+    const logoRef = useRef(null)
+    const menuContainerRef = useRef(null)
+    const progressRef = useRef(null)
+    const shrinkTimerRef = useRef(null)
+    const navTimeline = useRef(null)
+    const contentTimeline = useRef(null)
 
     // Initialize GSAP timeline for navbar
     useEffect(() => {
-        navTimeline.current = gsap.timeline({ paused: true });
+        navTimeline.current = gsap.timeline({ paused: true })
 
-        // Only setup the animation if the ref exists
         if (navbarRef.current) {
-            // Store original dimensions to restore on reverse
-            const originalWidth = "80%";
-            const originalHeight = "90px";
-            const originalBorderRadius = "45px";
+            const originalWidth = "80%"
+            const originalHeight = "90px"
+            const originalBorderRadius = "45px"
 
-            // First, set the initial state to ensure proper expansion
+            // Set initial state
             gsap.set(navbarRef.current, {
                 width: originalWidth,
                 height: originalHeight,
-                borderRadius: originalBorderRadius
-            });
+                borderRadius: originalBorderRadius,
+            })
 
             // Define the shrink animation
-            navTimeline.current
-                .to(navbarRef.current, {
-                    width: "150px",
-                    height: "50px",
-                    borderRadius: "25px",
-                    duration: 0.6,
-                    ease: "power2.inOut"
-                });
+            navTimeline.current.to(navbarRef.current, {
+                width: "150px",
+                height: "50px",
+                borderRadius: "25px",
+                duration: 0.6,
+                ease: "power2.inOut",
+            })
         }
 
         return () => {
-            if (navTimeline.current) {
-                navTimeline.current.kill();
-            }
-        };
-    }, []);
+            navTimeline.current && navTimeline.current.kill()
+        }
+    }, [])
 
-    // Setup content animation timeline
+    // Setup content animation timeline for logo and menu container
     useEffect(() => {
-        contentTimeline.current = gsap.timeline({ paused: true });
+        contentTimeline.current = gsap.timeline({ paused: true })
 
         if (logoRef.current && menuContainerRef.current) {
-            // Reset any existing animations
-            gsap.set([logoRef.current, menuContainerRef.current], {
-                clearProps: "all"
-            });
+            // Clear any previous inline styles
+            gsap.set([logoRef.current, menuContainerRef.current], { clearProps: "all" })
 
-            // Setup the content animation timeline
             contentTimeline.current
                 .fromTo(
                     logoRef.current,
-                    {
-                        opacity: 0,
-                        y: 15,
-                        scale: 0.95
-                    },
-                    {
-                        opacity: 1,
-                        y: 0,
-                        scale: 1,
-                        duration: 0.4,
-                        ease: "back.out(1.4)"
-                    }
+                    { opacity: 0, y: 15, scale: 0.95 },
+                    { opacity: 1, y: 0, scale: 1, duration: 0.4, ease: "back.out(1.4)" },
                 )
                 .fromTo(
                     menuContainerRef.current,
-                    {
-                        opacity: 0,
-                        y: 15,
-                        scale: 0.95
-                    },
-                    {
-                        opacity: 1,
-                        y: 0,
-                        scale: 1,
-                        duration: 0.4,
-                        ease: "back.out(1.4)"
-                    },
-                    "-=0.25" // Slight overlap for smoother feeling
-                );
+                    { opacity: 0, y: 15, scale: 0.95 },
+                    { opacity: 1, y: 0, scale: 1, duration: 0.4, ease: "back.out(1.4)" },
+                    "-=0.25",
+                )
         }
 
         return () => {
-            if (contentTimeline.current) {
-                contentTimeline.current.kill();
-            }
-        };
-    }, []);
+            contentTimeline.current && contentTimeline.current.kill()
+        }
+    }, [])
 
     // Update timeline when expanded state changes
     useEffect(() => {
         if (navTimeline.current) {
             if (isExpanded) {
-                navTimeline.current.reverse();
-
-                // Play content animation when navbar starts expanding
-                if (contentTimeline.current) {
-                    contentTimeline.current.restart();
-                }
-
-                setIsPulsing(false);
+                navTimeline.current.reverse()
+                contentTimeline.current && contentTimeline.current.restart()
+                setIsPulsing(false)
             } else {
-                navTimeline.current.play();
-                setTimeout(() => setIsPulsing(true), 600); // Start pulsing after shrink animation
+                navTimeline.current.play()
+                setTimeout(() => setIsPulsing(true), 600)
             }
         }
-    }, [isExpanded]);
+    }, [isExpanded])
 
-    // Handle initial expansion timeout
+    // Handle automatic collapse if no interaction within 2s
     useEffect(() => {
         const timer = setTimeout(() => {
             if (!userInteracted) {
-                setIsExpanded(false);
+                setIsExpanded(false)
             }
-        }, 2000);
+        }, 2000)
 
-        return () => clearTimeout(timer);
-    }, [userInteracted]);
+        return () => clearTimeout(timer)
+    }, [userInteracted])
 
-    // Reset the interaction state when expanded
+    // Reset user interaction state when collapsed
     useEffect(() => {
         if (!isExpanded) {
-            setUserInteracted(false);
+            setUserInteracted(false)
         }
-    }, [isExpanded]);
+    }, [isExpanded])
 
     // Clean up timers on unmount
     useEffect(() => {
         return () => {
-            if (shrinkTimerRef.current) {
-                clearTimeout(shrinkTimerRef.current);
-            }
-        };
-    }, []);
+            if (shrinkTimerRef.current) clearTimeout(shrinkTimerRef.current)
+        }
+    }, [])
 
     // Animate the shrinking progress bar
     useEffect(() => {
@@ -286,60 +196,48 @@ const Navbar = () => {
                     duration: 3,
                     ease: "linear",
                     onComplete: () => {
-                        setIsExpanded(false);
-                        setIsShrinking(false);
-                    }
-                }
-            );
+                        setIsExpanded(false)
+                        setIsShrinking(false)
+                    },
+                },
+            )
         } else if (!isShrinking && progressRef.current) {
-            gsap.killTweensOf(progressRef.current);
+            gsap.killTweensOf(progressRef.current)
         }
-
-        return () => {
-            if (progressRef.current) {
-                gsap.killTweensOf(progressRef.current);
-            }
-        };
-    }, [isShrinking]);
+        return () => progressRef.current && gsap.killTweensOf(progressRef.current)
+    }, [isShrinking])
 
     const handleExpand = () => {
-        // Clear any pending shrink timer
         if (shrinkTimerRef.current) {
-            clearTimeout(shrinkTimerRef.current);
-            shrinkTimerRef.current = null;
+            clearTimeout(shrinkTimerRef.current)
+            shrinkTimerRef.current = null
         }
-
-        setIsShrinking(false);
-        setIsExpanded(true);
-        setUserInteracted(true);
-    };
+        setIsShrinking(false)
+        setIsExpanded(true)
+        setUserInteracted(true)
+    }
 
     const handleShrink = () => {
-        if (!userInteracted) return;
+        if (!userInteracted) return
+        setIsShrinking(true)
+    }
 
-        // Start the shrinking process
-        setIsShrinking(true);
-    };
-
-    // Cancel shrinking if user comes back
     const handleShrinkCancel = () => {
-        if (isShrinking) {
-            setIsShrinking(false);
-        }
-    };
+        if (isShrinking) setIsShrinking(false)
+    }
 
-    // Use a pre-defined class for the expanded/shrunk state to reduce inline style calculations
+    // Modified navbar class with template literals properly formatted
     const navbarClass = `${styles.paddingX} mx-auto flex items-center fixed top-5 left-1/2 transform -translate-x-1/2 z-20 
-        bg-white/10 backdrop-blur-md border border-white/20 shadow-lg rounded-full overflow-hidden
-        ${!isExpanded ? 'cursor-pointer hover:bg-white/15' : ''}`;
+        bg-white/10 backdrop-blur-md border border-white/20 shadow-lg rounded-full
+        ${!isExpanded ? "cursor-pointer hover:bg-white/15" : ""}`
 
     return (
         <div
             ref={navbarRef}
             className={navbarClass}
             onMouseEnter={() => {
-                handleExpand();
-                handleShrinkCancel();
+                handleExpand()
+                handleShrinkCancel()
             }}
             onMouseLeave={handleShrink}
             onClick={handleExpand}
@@ -355,31 +253,20 @@ const Navbar = () => {
                         exit="hidden"
                     >
                         <div ref={logoRef} className="flex items-center gap-2">
-                            <Link
-                                to="/"
-                                onClick={() => {
-                                    window.scrollTo(0, 0);
-                                }}
-                            >
-                                <img src={veeraLogo} alt="logo" className="md:w-80 h-9 object-contain" />
+                            <Link to="/" onClick={() => window.scrollTo(0, 0)}>
+                                <img src={veeraLogo || "/placeholder.svg"} alt="logo" className="md:w-80 h-9 object-contain" />
                             </Link>
                         </div>
 
-                        <div ref={menuContainerRef} className={`${style.header} relative z-50`}>
+                        {/* This is the key part that needs to be fixed - using the structure from the working file */}
+                        <div ref={menuContainerRef} className={style.header}>
                             <motion.div
-                                className={`${style.menu} z-50`}
+                                className={style.menu}
                                 variants={menu}
                                 animate={isActive ? "open" : "closed"}
                                 initial="closed"
-                                style={{ position: "relative" }}
                             >
-                                <AnimatePresence>
-                                    {isActive && (
-                                        <div className="z-50" style={{ position: "absolute" }}>
-                                            <Nav />
-                                        </div>
-                                    )}
-                                </AnimatePresence>
+                                <AnimatePresence>{isActive && <Nav />}</AnimatePresence>
                             </motion.div>
                             <Menu isActive={isActive} toggleMenu={() => setIsActive(!isActive)} />
                         </div>
@@ -388,7 +275,7 @@ const Navbar = () => {
                     <motion.div
                         key="shrunk"
                         className="absolute inset-0 flex items-center justify-center"
-                        variants={isPulsing ? indicatorVariants : indicatorVariants}
+                        variants={indicatorVariants}
                         initial="initial"
                         animate={isPulsing ? "pulse" : "animate"}
                         exit="exit"
@@ -398,19 +285,16 @@ const Navbar = () => {
                 )}
             </AnimatePresence>
 
-            {/* Shrinking indicator/countdown */}
             {isShrinking && (
                 <div className="absolute bottom-1 left-1/2 transform -translate-x-1/2">
                     <div className="h-1 w-16 bg-white/30 rounded-full overflow-hidden">
-                        <div
-                            ref={progressRef}
-                            className="h-full bg-white/70 origin-left"
-                        />
+                        <div ref={progressRef} className="h-full bg-white/70 origin-left" />
                     </div>
                 </div>
             )}
         </div>
-    );
-};
+    )
+}
 
-export default Navbar;
+export default Navbar
+
