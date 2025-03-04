@@ -74,6 +74,13 @@ svg {
    height: 30vw;
 }
 
+@media (max-width: 480px) { /* Targets mobile devices */
+   svg {
+      width: 50vw; /* Even larger for smaller screens */
+      height: auto; /* Maintain aspect ratio */
+   }
+}
+
 @keyframes line-anim {
    100% {
       fill: white;
