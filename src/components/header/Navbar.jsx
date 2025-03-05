@@ -132,8 +132,8 @@ const Navbar = () => {
         navTimeline.current = gsap.timeline({ paused: true })
 
         if (navbarRef.current) {
-            const originalWidth = "80%"
-            const originalHeight = "90px"
+            const originalWidth = isMobile ? "85%" : "80%"
+            const originalHeight = isMobile ? "65px" : "90px"
             const originalBorderRadius = "45px"
 
             // Set initial state
@@ -145,8 +145,8 @@ const Navbar = () => {
 
             // Define the shrink animation
             navTimeline.current.to(navbarRef.current, {
-                width: "150px",
-                height: "50px",
+                width: isMobile ? "120px" : "150px",
+                height: isMobile ? "45px" : "50px",
                 borderRadius: "25px",
                 duration: 0.6,
                 ease: "power2.inOut",
@@ -156,7 +156,7 @@ const Navbar = () => {
         return () => {
             navTimeline.current && navTimeline.current.kill()
         }
-    }, [])
+    }, [isMobile])
 
     // Setup content animation timeline for logo and menu container
     useEffect(() => {
@@ -303,7 +303,7 @@ const Navbar = () => {
                                 <img
                                     src={isMobile ? (favicon) : (veeraLogo)}
                                     alt="logo"
-                                    className={`${isMobile ? "w-10 h-10" : "md:w-55 h-9"} object-contain`}
+                                    className={`${isMobile ? "w-20 h-10" : "md:w-55 h-9"} object-contain`}
                                 />
                             </Link>
                         </div>
