@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 import { styles } from "../../styles"
-import { veeraLogo } from "../../assets"
+import { veeraLogo, favicon } from "../../assets"
 import { useEffect, useState, useRef } from "react"
 import Menu from "./menu/Menu"
 import Nav from "./nav/Nav"
@@ -77,6 +77,7 @@ const Navbar = () => {
     const [userInteracted, setUserInteracted] = useState(false)
     const [isShrinking, setIsShrinking] = useState(false)
     const [isPulsing, setIsPulsing] = useState(false)
+    const [isMobile, setIsMobile] = useState(false)
 
     const navbarRef = useRef(null)
     const logoRef = useRef(null)
@@ -85,6 +86,46 @@ const Navbar = () => {
     const shrinkTimerRef = useRef(null)
     const navTimeline = useRef(null)
     const contentTimeline = useRef(null)
+
+    useEffect(() => {
+        const checkMobileView = () => {
+            // Adjust breakpoint as needed (typically 768px for tablets/mobile)
+            const mobileBreakpoint = 768;
+            const checkWidth = window.innerWidth <= mobileBreakpoint;
+
+            setIsMobile(checkWidth);
+
+            // Optional: Adjust navbar size for mobile
+            if (navbarRef.current) {
+                if (checkWidth) {
+                    // Mobile-specific sizing
+                    gsap.set(navbarRef.current, {
+                        width: "90%", // Slightly narrower on mobile
+                        height: "60px", // Smaller height
+                        borderRadius: "30px" // Adjusted border radius
+                    });
+                } else {
+                    // Reset to original desktop sizing
+                    gsap.set(navbarRef.current, {
+                        width: "80%",
+                        height: "90px",
+                        borderRadius: "45px"
+                    });
+                }
+            }
+        };
+
+        // Check initial view
+        checkMobileView();
+
+        // Add resize listener
+        window.addEventListener('resize', checkMobileView);
+
+        // Cleanup listener
+        return () => {
+            window.removeEventListener('resize', checkMobileView);
+        };
+    }, []);
 
     // Initialize GSAP timeline for navbar
     useEffect(() => {
@@ -259,7 +300,11 @@ const Navbar = () => {
                     >
                         <div ref={logoRef} className="flex items-center gap-2">
                             <Link to="/" onClick={() => window.scrollTo(0, 0)}>
-                                <img src={veeraLogo || "/placeholder.svg"} alt="logo" className="md:w-55 h-9 object-contain" />
+                                <img
+                                    src={isMobile ? (favicon) : (veeraLogo)}
+                                    alt="logo"
+                                    className={`${isMobile ? "w-10 h-10" : "md:w-55 h-9"} object-contain`}
+                                />
                             </Link>
                         </div>
 
