@@ -12,9 +12,9 @@ import {
    git,
    figma,
    docker,
-   carrent,
-   jobit,
-   tripguide,
+   servebridge,
+   userAuth,
+   userManagement,
    threejs,
 } from "../assets";
 
@@ -84,12 +84,54 @@ const about = "I’m a Full-Stack Developer passionate about building scalable, 
 
 const projects = [
    {
-      name: "Car Rent",
+      name: "ServeBridge",
       description:
-         "Web-based platform that allows users to search, book, and manage car rentals from various providers, providing a convenient and efficient solution for transportation needs.",
+         "Built a real-time service booking platform with separate dashboards, dynamic announcements, and real-time updates for improved user experience.",
       tags: [
          {
-            name: "react",
+            name: "typescript",
+            color: "blue-text-gradient",
+         },
+         {
+            name: "nextjs",
+            color: "green-text-gradient",
+         },
+         {
+            name: "mongodb",
+            color: "pink-text-gradient",
+         },
+      ],
+      image: servebridge,
+      source_code_link: "https://github.com/Veera5iva/ServeBridge",
+   },
+   {
+      name: "User Authentication",
+      description:
+         "Built a secure authentication system with JWT, email verification, and efficient user credential management for seamless registration, login, and session handling.",
+      tags: [
+         {
+            name: "typescript",
+            color: "blue-text-gradient",
+         },
+         {
+            name: "nextjs",
+            color: "green-text-gradient",
+         },
+         {
+            name: "mongodb",
+            color: "pink-text-gradient",
+         },
+      ],
+      image: userAuth,
+      source_code_link: "https://github.com/Veera5iva/auth-app-nextjs",
+   },
+   {
+      name: "User Management",
+      description:
+         "Built a user management backend with JWT authentication, error handling, and tested RESTful APIs for registration, login, and account management.",
+      tags: [
+         {
+            name: "expressjs",
             color: "blue-text-gradient",
          },
          {
@@ -97,54 +139,12 @@ const projects = [
             color: "green-text-gradient",
          },
          {
-            name: "tailwind",
+            name: "postman",
             color: "pink-text-gradient",
          },
       ],
-      image: carrent,
-      source_code_link: "https://github.com/",
-   },
-   {
-      name: "Job IT",
-      description:
-         "Web application that enables users to search for job openings, view estimated salary ranges for positions, and locate available jobs based on their current location.",
-      tags: [
-         {
-            name: "react",
-            color: "blue-text-gradient",
-         },
-         {
-            name: "restapi",
-            color: "green-text-gradient",
-         },
-         {
-            name: "scss",
-            color: "pink-text-gradient",
-         },
-      ],
-      image: jobit,
-      source_code_link: "https://github.com/",
-   },
-   {
-      name: "Trip Guide",
-      description:
-         "A comprehensive travel booking platform that allows users to book flights, hotels, and rental cars, and offers curated recommendations for popular destinations.",
-      tags: [
-         {
-            name: "nextjs",
-            color: "blue-text-gradient",
-         },
-         {
-            name: "supabase",
-            color: "green-text-gradient",
-         },
-         {
-            name: "css",
-            color: "pink-text-gradient",
-         },
-      ],
-      image: tripguide,
-      source_code_link: "https://github.com/",
+      image: userManagement,
+      source_code_link: "https://github.com/Veera5iva/user-management-backend",
    },
 ];
 

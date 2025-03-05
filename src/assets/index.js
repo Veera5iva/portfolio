@@ -17,9 +17,10 @@ import tailwind from "./tech/tailwind.png";
 import typescript from "./tech/typescript.png";
 import threejs from "./tech/threejs.svg";
 
-import carrent from "./carrent.png";
-import jobit from "./jobit.png";
-import tripguide from "./tripguide.png";
+import servebridge from "./projects/serveBridge.png";
+import userAuth from "./projects/userAuth.png";
+import userManagement from "./projects/userManagement.png";
+
 
 import terminal from "./terminal.png";
 
@@ -41,8 +42,8 @@ export {
   tailwind,
   typescript,
   threejs,
-  carrent,
-  jobit,
-  tripguide,
+  servebridge,
+  userAuth,
+  userManagement,
   terminal,
 };
