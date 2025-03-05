@@ -12,7 +12,8 @@
 
   --box-shadow-card: 0px 35px 120px -15px #211e35;
 
-  --breakpoint-xs: 450px;
+  --breakpoint-xs: 375px;
+  --breakpoint-sm: 430px;
   
 }
 

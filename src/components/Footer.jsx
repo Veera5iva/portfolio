@@ -1,12 +1,47 @@
-import { TextPressure } from "./ui"
+import { useEffect, useState } from "react";
+import { TextPressure } from "./ui";
+
 const Footer = () => {
+   const [footerHeight, setFooterHeight] = useState(270);
+
+   useEffect(() => {
+      // Function to check screen width and update height accordingly
+      const updateFooterHeight = () => {
+         if (window.innerWidth <= 375) {
+            setFooterHeight(67); // Smaller height for mobile devices
+         } else if (window.innerWidth <= 430) {
+            setFooterHeight(78); // Smaller height for mobile devices
+
+         } else {
+            setFooterHeight(270); // Default height for larger screens
+         }
+      };
+
+      updateFooterHeight(); // Set height initially
+      window.addEventListener("resize", updateFooterHeight); // Listen for screen size changes
+
+      return () => window.removeEventListener("resize", updateFooterHeight); // Cleanup event listener
+   }, []);
+
    return (
       <div
-         className='relative h-[270px]'
-         style={{ clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)" }}
+         className="relative"
+         style={{
+            height: `${footerHeight}px`,
+            clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)",
+         }}
       >
-         <div className='relative h-[calc(100vh+270px)] -top-[100vh]'>
-            <div className='h-[270px] sticky top-[calc(100vh-270px)]'>
+         <div
+            className="relative -top-[100vh]"
+            style={{ height: `calc(100vh + ${footerHeight}px)` }}
+         >
+            <div
+               className="sticky"
+               style={{
+                  height: `${footerHeight}px`,
+                  top: `calc(100vh - ${footerHeight}px)`,
+               }}
+            >
                <TextPressure
                   text="Veerasiva!"
                   flex={true}
@@ -26,7 +61,7 @@ const Footer = () => {
             </div>
          </div>
       </div>
-   )
-}
+   );
+};
 
-export default Footer
+export default Footer;

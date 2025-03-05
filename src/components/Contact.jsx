@@ -136,7 +136,7 @@ const Contact = () => {
             </h2>
          </motion.div>
 
-         <div className="!mt-5 relative flex items-center justify-center flex-col">
+         <div className="md:!mt-7 !mt-8 relative flex items-center justify-center flex-col">
             {!isMobile && (
                <img
                   src={terminal}
@@ -145,7 +145,7 @@ const Contact = () => {
                />
             )}
 
-            <div className={`${isMobile ? "relative" : "absolute"} inset-0 flex flex-col items-center justify-center w-[82%] md:w-auto px-4 sm:px-10`}>
+            <div className={`${isMobile ? "relative" : "absolute"} inset-0 flex flex-col items-center justify-center w-[95%] md:w-auto px-4 sm:px-10`}>
                <form
                   ref={formRef}
                   className={`flex flex-col w-full max-w-md ${isMobile ? "!space-y-4 bg-black/30 backdrop-blur-md !p-5 rounded-lg border !border-white/10 shadow-lg" : "!mt-12 !space-y-6"}`}
