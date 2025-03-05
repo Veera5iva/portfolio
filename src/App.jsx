@@ -9,7 +9,7 @@ const App = () => {
       setTimeout(() => {
          preloader.style.display = 'none';
          setLoading(false);
-      }, 2000);
+      }, 4500);
    }
    return (
       !loading && (
