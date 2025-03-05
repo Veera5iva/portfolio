@@ -26,7 +26,7 @@ svg path {
    &:nth-child(1) {
       stroke-dasharray: 175.466552734375px;
       stroke-dashoffset: 175.466552734375px;
-      animation: line-anim 3s ease forwards 2.4s;
+      animation: line-anim 2s ease forwards 2.4s;
    }
    &:nth-child(2) {
       stroke-dasharray: 115.00949096679688px;
