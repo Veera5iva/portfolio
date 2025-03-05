@@ -51,7 +51,7 @@ const About = () => {
          </motion.div>
 
          <p
-            className="!mt-4 relative text-secondary text-[26px] md:text-[50px] leading-12 md:leading-20"
+            className="!mt-4 relative text-secondary sm:text-[29px] xs:text-[26px] text-[25px] md:text-[50px] sm:leading-12 leading-10 md:leading-20"
             ref={(el) => {
                element.current = el;
                textRef.current = el;
