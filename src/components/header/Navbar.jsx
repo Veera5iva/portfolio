@@ -8,22 +8,6 @@ import style from "./style.module.scss"
 import { motion, AnimatePresence } from "framer-motion"
 import gsap from "gsap"
 
-const menu = {
-    open: {
-        width: "420px",
-        height: "570px",
-        top: "-25px",
-        right: "-25px",
-        transition: { duration: 0.75, type: "tween", ease: [0.76, 0, 0.24, 1] },
-    },
-    closed: {
-        width: "100px",
-        height: "40px",
-        top: "0px",
-        right: "0px",
-        transition: { duration: 0.75, delay: 0.35, type: "tween", ease: [0.76, 0, 0.24, 1] },
-    },
-}
 
 const contentVariants = {
     visible: {
@@ -72,6 +56,8 @@ const indicatorVariants = {
 }
 
 const Navbar = () => {
+
+
     const [isActive, setIsActive] = useState(false)
     const [isExpanded, setIsExpanded] = useState(true)
     const [userInteracted, setUserInteracted] = useState(false)
@@ -86,6 +72,23 @@ const Navbar = () => {
     const shrinkTimerRef = useRef(null)
     const navTimeline = useRef(null)
     const contentTimeline = useRef(null)
+
+    const menu = {
+        open: {
+            width: isMobile ? "300px" : "420px",
+            height: isMobile ? "450px" : "570px",
+            top: isMobile ? "-20px" : "-25px", // Less offset for mobile
+            right: isMobile ? "-20px" : "-25px", // Less offset for mobile
+            transition: { duration: 0.75, type: "tween", ease: [0.76, 0, 0.24, 1] },
+        },
+        closed: {
+            width: isMobile ? "55px" : "100px",
+            height: isMobile ? "35px" : "40px",
+            top: isMobile ? "0px" : "0px",
+            right: isMobile ? "5px" : "0px",
+            transition: { duration: 0.75, delay: 0.35, type: "tween", ease: [0.76, 0, 0.24, 1] },
+        },
+    }
 
     useEffect(() => {
         const checkMobileView = () => {
