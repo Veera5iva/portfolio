@@ -7,8 +7,11 @@ const Footer = () => {
    useEffect(() => {
       // Function to check screen width and update height accordingly
       const updateFooterHeight = () => {
-         if (window.innerWidth <= 640) {
-            setFooterHeight(68); // Smaller height for mobile devices
+         if (window.innerWidth <= 375) {
+            setFooterHeight(67); // Smaller height for mobile devices
+         } else if (window.innerWidth <= 430) {
+            setFooterHeight(78); // Smaller height for mobile devices
+
          } else {
             setFooterHeight(270); // Default height for larger screens
          }
