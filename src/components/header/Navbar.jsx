@@ -185,25 +185,32 @@ const Navbar = () => {
 
     // Animate the shrinking progress bar
     useEffect(() => {
-        if (isShrinking && progressRef.current) {
+        const progressElement = progressRef.current; // Store reference to avoid stale closure
+
+        if (isShrinking && progressElement) {
             gsap.fromTo(
-                progressRef.current,
+                progressElement,
                 { scaleX: 1 },
                 {
                     scaleX: 0,
                     duration: 3,
                     ease: "linear",
                     onComplete: () => {
-                        setIsExpanded(false)
-                        setIsShrinking(false)
+                        setIsExpanded(false);
+                        setIsShrinking(false);
                     },
-                },
-            )
-        } else if (!isShrinking && progressRef.current) {
-            gsap.killTweensOf(progressRef.current)
+                }
+            );
+        } else if (!isShrinking && progressElement) {
+            gsap.killTweensOf(progressElement);
         }
-        return () => progressRef.current && gsap.killTweensOf(progressRef.current)
-    }, [isShrinking])
+
+        return () => {
+            if (progressElement) {
+                gsap.killTweensOf(progressElement); // Cleanup using stored reference
+            }
+        };
+    }, [isShrinking]);
 
     const handleExpand = () => {
         if (shrinkTimerRef.current) {
