@@ -1,5 +1,3 @@
-"use client"
-
 import { Link } from "react-router-dom"
 import { styles } from "../../styles"
 import { veeraLogo } from "../../assets"
@@ -254,7 +252,7 @@ const Navbar = () => {
                     >
                         <div ref={logoRef} className="flex items-center gap-2">
                             <Link to="/" onClick={() => window.scrollTo(0, 0)}>
-                                <img src={veeraLogo || "/placeholder.svg"} alt="logo" className="md:w-80 h-9 object-contain" />
+                                <img src={veeraLogo || "/placeholder.svg"} alt="logo" className="md:w-55 h-9 object-contain" />
                             </Link>
                         </div>
 
