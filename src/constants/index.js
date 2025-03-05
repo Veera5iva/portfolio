@@ -4,18 +4,17 @@ import {
    html,
    css,
    reactjs,
-   redux,
    tailwind,
    nodejs,
    nextjs,
    mongodb,
    git,
-   figma,
-   docker,
+   java,
+   expressjs,
+   mysql,
    servebridge,
    userAuth,
    userManagement,
-   threejs,
 } from "../assets";
 
 
@@ -41,10 +40,6 @@ const technologies = [
       icon: reactjs,
    },
    {
-      name: "Redux Toolkit",
-      icon: redux,
-   },
-   {
       name: "Tailwind CSS",
       icon: tailwind,
    },
@@ -61,20 +56,20 @@ const technologies = [
       icon: nextjs,
    },
    {
-      name: "Three JS",
-      icon: threejs,
+      name: "Java",
+      icon: java,
+   },
+   {
+      name: "Expressjs",
+      icon: expressjs,
+   },
+   {
+      name: "MySQL",
+      icon: mysql,
    },
    {
       name: "git",
       icon: git,
-   },
-   {
-      name: "figma",
-      icon: figma,
-   },
-   {
-      name: "docker",
-      icon: docker,
    },
 ];
 
