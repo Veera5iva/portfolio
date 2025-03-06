@@ -1,12 +1,17 @@
-.header{
+.header {
     position: fixed;
     right: 100px;
     top: 25px;
 
-    .menu{
+    @media (max-width: 768px) {
+        right: 25px; // Adjusted position for smaller screens
+        top: 12px;   // Reduced top spacing
+    }
+
+    .menu {
         width: 480px;
         height: 650px;
-        background-color:#e23720;
+        background-color: #e23720;
         border-radius: 25px;
         position: absolute;
         top: 100px;

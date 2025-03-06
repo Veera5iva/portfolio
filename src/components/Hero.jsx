@@ -71,14 +71,6 @@ const Hero = () => {
             { text: ",", class: colors.punctuation },
             { text: "\n", class: "" },
 
-            { text: "  funFact", class: colors.property },
-            { text: ": ", class: colors.punctuation },
-            { text: "\"Once debugged a bug that turned out to be a missing semicolon.", class: colors.string },
-            { text: "\n", class: "" },
-            { text: "    It took two hours. Now I triple-check.\"", class: colors.string },
-            { text: ",", class: colors.punctuation },
-            { text: "\n", class: "" },
-
             { text: "  philosophy", class: colors.property },
             { text: ": ", class: colors.punctuation },
             { text: "\"Write code as if the next person maintaining it is a time-traveling assassin.\"", class: colors.string },
@@ -98,7 +90,9 @@ const Hero = () => {
             { text: ".", class: colors.punctuation },
             { text: "get", class: colors.method },
             { text: "(", class: colors.bracket },
-            { text: "\"/api/portfolio/hero-section\"", class: colors.string },
+            { text: "\"/api/portfolio", class: colors.string },
+            { text: "\n  ", class: "" }, // New line + indentation
+            { text: "/hero-section\"", class: colors.string },
             { text: ");", class: colors.punctuation },
             { text: "\n", class: "" },
 
@@ -128,23 +122,17 @@ const Hero = () => {
 
             { text: "  headline", class: colors.property },
             { text: ": ", class: colors.punctuation },
-            { text: "\"Turning caffeine into code & ideas into applications\"", class: colors.string },
-            { text: ",", class: colors.punctuation },
+            { text: "\"Turning caffeine into code & ideas", class: colors.string },
             { text: "\n", class: "" },
-
-            { text: "  funFact", class: colors.property },
-            { text: ": ", class: colors.punctuation },
-            { text: "\"Once debugged a bug that turned out to be a missing", class: colors.string },
-            { text: "\n", class: "" },
-            { text: "    semicolon. It took two hours. Now I triple-check.\"", class: colors.string },
+            { text: "    into applications\"", class: colors.string },
             { text: ",", class: colors.punctuation },
             { text: "\n", class: "" },
 
             { text: "  philosophy", class: colors.property },
             { text: ": ", class: colors.punctuation },
-            { text: "\"Write code as if the next person maintaining it is a", class: colors.string },
+            { text: "\"Write code as if the next person", class: colors.string },
             { text: "\n", class: "" },
-            { text: "    time-traveling assassin.\"", class: colors.string },
+            { text: "    maintaining it is a time-traveling assassin.\"", class: colors.string },
             { text: "\n", class: "" },
 
             { text: "};", class: colors.punctuation },
@@ -153,10 +141,10 @@ const Hero = () => {
    };
 
    // Get the appropriate tokens based on screen size
-   const codeTokens = getCodeTokens(isMobileRef.current);
+   // const codeTokens = getCodeTokens(isMobileRef.current);
 
-   // Calculate the total number of characters
-   const totalChars = codeTokens.reduce((sum, token) => sum + token.text.length, 0);
+   // // Calculate the total number of characters
+   // const totalChars = codeTokens.reduce((sum, token) => sum + token.text.length, 0);
 
    useEffect(() => {
       // Handle window resize to update mobile state
@@ -262,7 +250,7 @@ const Hero = () => {
       <section ref={heroRef} className="relative w-full h-screen flex items-center justify-center bg-black text-[#e23720] font-mono overflow-hidden">
          <div className="md:max-w-4xl w-full px-5 relative md:right-14 right-[-6px]">
             <h1 className="text-xl sm:text-2xl md:text-3xl text-[#e23720]">User@veerasiva: ~/portfolio</h1>
-            <div ref={textContainerRef} className="mt-4 text-[14.5px] sm:text-xl md:text-2xl leading-relaxed whitespace-pre">
+            <div ref={textContainerRef} className="mt-4 text-[14.5px] xs:text-[15px] sm:text-[17px] md:text-2xl leading-relaxed whitespace-pre">
                {/* Text will be inserted here via JS */}
             </div>
          </div>

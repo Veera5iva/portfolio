@@ -1,8 +1,6 @@
-"use client"
-
 import { Link } from "react-router-dom"
 import { styles } from "../../styles"
-import { veeraLogo } from "../../assets"
+import { veeraLogo, veeraMobileLogo } from "../../assets"
 import { useEffect, useState, useRef } from "react"
 import Menu from "./menu/Menu"
 import Nav from "./nav/Nav"
@@ -10,22 +8,6 @@ import style from "./style.module.scss"
 import { motion, AnimatePresence } from "framer-motion"
 import gsap from "gsap"
 
-const menu = {
-    open: {
-        width: "420px",
-        height: "570px",
-        top: "-25px",
-        right: "-25px",
-        transition: { duration: 0.75, type: "tween", ease: [0.76, 0, 0.24, 1] },
-    },
-    closed: {
-        width: "100px",
-        height: "40px",
-        top: "0px",
-        right: "0px",
-        transition: { duration: 0.75, delay: 0.35, type: "tween", ease: [0.76, 0, 0.24, 1] },
-    },
-}
 
 const contentVariants = {
     visible: {
@@ -74,11 +56,14 @@ const indicatorVariants = {
 }
 
 const Navbar = () => {
+
+
     const [isActive, setIsActive] = useState(false)
     const [isExpanded, setIsExpanded] = useState(true)
     const [userInteracted, setUserInteracted] = useState(false)
     const [isShrinking, setIsShrinking] = useState(false)
     const [isPulsing, setIsPulsing] = useState(false)
+    const [isMobile, setIsMobile] = useState(false)
 
     const navbarRef = useRef(null)
     const logoRef = useRef(null)
@@ -88,13 +73,70 @@ const Navbar = () => {
     const navTimeline = useRef(null)
     const contentTimeline = useRef(null)
 
+    const menu = {
+        open: {
+            width: isMobile ? "300px" : "420px",
+            height: isMobile ? "450px" : "570px",
+            top: isMobile ? "-20px" : "-25px", // Less offset for mobile
+            right: isMobile ? "-20px" : "-25px", // Less offset for mobile
+            transition: { duration: 0.75, type: "tween", ease: [0.76, 0, 0.24, 1] },
+        },
+        closed: {
+            width: isMobile ? "55px" : "100px",
+            height: isMobile ? "35px" : "40px",
+            top: isMobile ? "0px" : "0px",
+            right: isMobile ? "5px" : "0px",
+            transition: { duration: 0.75, delay: 0.35, type: "tween", ease: [0.76, 0, 0.24, 1] },
+        },
+    }
+
+    useEffect(() => {
+        const checkMobileView = () => {
+            // Adjust breakpoint as needed (typically 768px for tablets/mobile)
+            const mobileBreakpoint = 768;
+            const checkWidth = window.innerWidth <= mobileBreakpoint;
+
+            setIsMobile(checkWidth);
+
+            // Optional: Adjust navbar size for mobile
+            if (navbarRef.current) {
+                if (checkWidth) {
+                    // Mobile-specific sizing
+                    gsap.set(navbarRef.current, {
+                        width: "90%", // Slightly narrower on mobile
+                        height: "60px", // Smaller height
+                        borderRadius: "30px" // Adjusted border radius
+                    });
+                } else {
+                    // Reset to original desktop sizing
+                    gsap.set(navbarRef.current, {
+                        width: "80%",
+                        height: "90px",
+                        borderRadius: "45px"
+                    });
+                }
+            }
+        };
+
+        // Check initial view
+        checkMobileView();
+
+        // Add resize listener
+        window.addEventListener('resize', checkMobileView);
+
+        // Cleanup listener
+        return () => {
+            window.removeEventListener('resize', checkMobileView);
+        };
+    }, []);
+
     // Initialize GSAP timeline for navbar
     useEffect(() => {
         navTimeline.current = gsap.timeline({ paused: true })
 
         if (navbarRef.current) {
-            const originalWidth = "80%"
-            const originalHeight = "90px"
+            const originalWidth = isMobile ? "85%" : "75%"
+            const originalHeight = isMobile ? "65px" : "90px"
             const originalBorderRadius = "45px"
 
             // Set initial state
@@ -106,8 +148,8 @@ const Navbar = () => {
 
             // Define the shrink animation
             navTimeline.current.to(navbarRef.current, {
-                width: "150px",
-                height: "50px",
+                width: isMobile ? "120px" : "150px",
+                height: isMobile ? "45px" : "50px",
                 borderRadius: "25px",
                 duration: 0.6,
                 ease: "power2.inOut",
@@ -117,7 +159,7 @@ const Navbar = () => {
         return () => {
             navTimeline.current && navTimeline.current.kill()
         }
-    }, [])
+    }, [isMobile])
 
     // Setup content animation timeline for logo and menu container
     useEffect(() => {
@@ -187,25 +229,32 @@ const Navbar = () => {
 
     // Animate the shrinking progress bar
     useEffect(() => {
-        if (isShrinking && progressRef.current) {
+        const progressElement = progressRef.current; // Store reference to avoid stale closure
+
+        if (isShrinking && progressElement) {
             gsap.fromTo(
-                progressRef.current,
+                progressElement,
                 { scaleX: 1 },
                 {
                     scaleX: 0,
                     duration: 3,
                     ease: "linear",
                     onComplete: () => {
-                        setIsExpanded(false)
-                        setIsShrinking(false)
+                        setIsExpanded(false);
+                        setIsShrinking(false);
                     },
-                },
-            )
-        } else if (!isShrinking && progressRef.current) {
-            gsap.killTweensOf(progressRef.current)
+                }
+            );
+        } else if (!isShrinking && progressElement) {
+            gsap.killTweensOf(progressElement);
         }
-        return () => progressRef.current && gsap.killTweensOf(progressRef.current)
-    }, [isShrinking])
+
+        return () => {
+            if (progressElement) {
+                gsap.killTweensOf(progressElement); // Cleanup using stored reference
+            }
+        };
+    }, [isShrinking]);
 
     const handleExpand = () => {
         if (shrinkTimerRef.current) {
@@ -254,7 +303,11 @@ const Navbar = () => {
                     >
                         <div ref={logoRef} className="flex items-center gap-2">
                             <Link to="/" onClick={() => window.scrollTo(0, 0)}>
-                                <img src={veeraLogo || "/placeholder.svg"} alt="logo" className="md:w-80 h-9 object-contain" />
+                                <img
+                                    src={isMobile ? (veeraMobileLogo) : (veeraLogo)}
+                                    alt="logo"
+                                    className={`${isMobile ? "w-22 h-10 " : "md:w-55 h-9"} object-contain`}
+                                />
                             </Link>
                         </div>
 
