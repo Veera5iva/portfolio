@@ -135,7 +135,7 @@ const Navbar = () => {
         navTimeline.current = gsap.timeline({ paused: true })
 
         if (navbarRef.current) {
-            const originalWidth = isMobile ? "85%" : "80%"
+            const originalWidth = isMobile ? "85%" : "75%"
             const originalHeight = isMobile ? "65px" : "90px"
             const originalBorderRadius = "45px"
 
@@ -306,7 +306,7 @@ const Navbar = () => {
                                 <img
                                     src={isMobile ? (veeraMobileLogo) : (veeraLogo)}
                                     alt="logo"
-                                    className={`${isMobile ? "w-20 h-10" : "md:w-55 h-9"} object-contain`}
+                                    className={`${isMobile ? "w-22 h-10 " : "md:w-55 h-9"} object-contain`}
                                 />
                             </Link>
                         </div>
