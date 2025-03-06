@@ -1,7 +1,7 @@
 import veeraLogo from "./veeraLogo.svg";
 import github from "./github.png";
 import preloaderText from "./preloaderText.svg";
-import favicon from "./favicon.svg";
+import veeraMobileLogo from "./veeraMobileLogo.svg";
 
 import css from "./tech/css.png";
 import git from "./tech/git.png";
@@ -45,5 +45,5 @@ export {
   userAuth,
   userManagement,
   terminal,
-  favicon
+  veeraMobileLogo
 };
