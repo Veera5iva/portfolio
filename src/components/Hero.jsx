@@ -71,14 +71,6 @@ const Hero = () => {
             { text: ",", class: colors.punctuation },
             { text: "\n", class: "" },
 
-            { text: "  funFact", class: colors.property },
-            { text: ": ", class: colors.punctuation },
-            { text: "\"Once debugged a bug that turned out to be a missing semicolon.", class: colors.string },
-            { text: "\n", class: "" },
-            { text: "    It took two hours. Now I triple-check.\"", class: colors.string },
-            { text: ",", class: colors.punctuation },
-            { text: "\n", class: "" },
-
             { text: "  philosophy", class: colors.property },
             { text: ": ", class: colors.punctuation },
             { text: "\"Write code as if the next person maintaining it is a time-traveling assassin.\"", class: colors.string },
@@ -132,14 +124,6 @@ const Hero = () => {
             { text: ",", class: colors.punctuation },
             { text: "\n", class: "" },
 
-            { text: "  funFact", class: colors.property },
-            { text: ": ", class: colors.punctuation },
-            { text: "\"Once debugged a bug that turned out to be a missing", class: colors.string },
-            { text: "\n", class: "" },
-            { text: "    semicolon. It took two hours. Now I triple-check.\"", class: colors.string },
-            { text: ",", class: colors.punctuation },
-            { text: "\n", class: "" },
-
             { text: "  philosophy", class: colors.property },
             { text: ": ", class: colors.punctuation },
             { text: "\"Write code as if the next person maintaining it is a", class: colors.string },
@@ -153,10 +137,10 @@ const Hero = () => {
    };
 
    // Get the appropriate tokens based on screen size
-   const codeTokens = getCodeTokens(isMobileRef.current);
+   // const codeTokens = getCodeTokens(isMobileRef.current);
 
-   // Calculate the total number of characters
-   const totalChars = codeTokens.reduce((sum, token) => sum + token.text.length, 0);
+   // // Calculate the total number of characters
+   // const totalChars = codeTokens.reduce((sum, token) => sum + token.text.length, 0);
 
    useEffect(() => {
       // Handle window resize to update mobile state
