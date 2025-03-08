@@ -1,36 +1,43 @@
 import { BrowserRouter } from 'react-router-dom'
 import { About, Contact, Hero, Navbar, Tech, Projects, Footer } from './components'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { Analytics } from '@vercel/analytics/react'
 
 const App = () => {
    const [loading, setLoading] = useState(true);
-   const preloader = document.getElementById('preloader');
-   if (preloader) {
-      setTimeout(() => {
-         preloader.style.display = 'none';
+
+   useEffect(() => {
+      const preloader = document.getElementById('preloader');
+      if (preloader) {
+         setTimeout(() => {
+            preloader.style.display = 'none';
+            setLoading(false);
+         }, 4500);
+      } else {
          setLoading(false);
-      }, 4500);
-   }
+      }
+   }, []);
+
    return (
-      !loading && (
-         <BrowserRouter>
-            <div className='relative z-0 bg-black'>
-
-               <Navbar />
-               <Hero />
-
-               <About />
-               <Tech />
-               <Projects />
-
-               <div className='relative z-0'>
-                  <Contact />
-                  <Footer />
+      <>
+         <Analytics /> {/* Ensures analytics runs on all pages */}
+         {!loading && (
+            <BrowserRouter>
+               <div className='relative z-0 bg-black'>
+                  <Navbar />
+                  <Hero />
+                  <About />
+                  <Tech />
+                  <Projects />
+                  <div className='relative z-0'>
+                     <Contact />
+                     <Footer />
+                  </div>
                </div>
-
-            </div>
-         </BrowserRouter>
-      )
+            </BrowserRouter>
+         )}
+      </>
    )
 }
+
 export default App;
